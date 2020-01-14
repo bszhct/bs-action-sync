@@ -21,9 +21,11 @@ s.onload = () => {
     const {type, nodeName, index} = options
     const node = document.querySelectorAll(nodeName)[index]
     if (node) {
-      const ev = document.createEvent('HTMLEvents')
-      ev.initEvent(type, true, true)
-      node.dispatchEvent(ev)
+      // ! 某些场景下会失效
+      // const ev = document.createEvent('HTMLEvents')
+      // ev.initEvent(type, true, true)
+      // node.dispatchEvent(ev)
+      node.click()
     }
     socketData = {
       sync: true,
