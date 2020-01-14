@@ -1,6 +1,6 @@
 {
   "name": "@bszhct/bs-action-sync",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "一个跨终端交互同步的玩具",
   "scripts": {
     "dev": "concurrently 'tsc --watch' 'rollup -c rollup.config.js -w'",
