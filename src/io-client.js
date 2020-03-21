@@ -1,11 +1,9 @@
 const s = document.createElement('script')
-s.src = '//cdn.bootcss.com/socket.io/2.2.0/socket.io.slim.js'
+s.src = '//cdn.jsdelivr.net/npm/socket.io-client@2.2.0/dist/socket.io.slim.js'
 
 s.onload = () => {
-  const {search} = window.location
-  const pathname = window.location.pathname || window.location.hash.slice(1)
   const socket = window.io(
-    `http://127.0.0.1:%port%?pathname=${pathname + (search ? `&${search.slice(1)}` : '')}`, {
+    'http://127.0.0.1:%port%', {
       transports: ['websocket', 'polling', 'flashsocket'],
     },
   )
@@ -14,7 +12,7 @@ s.onload = () => {
     // 通过服务端修改状态, 防止出现死循坏
     sync: true,
   }
-  
+
   // 监听来自服务器的事件推送
   socket.on('event of click', options => {
     socketData = options
