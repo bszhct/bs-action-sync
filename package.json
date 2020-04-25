@@ -3,8 +3,8 @@
   "version": "1.0.2",
   "description": "一个跨终端交互同步的玩具",
   "scripts": {
-    "dev": "concurrently 'tsc --watch' 'rollup -c rollup.config.js -w'",
-    "build": "concurrently 'tsc' 'rollup -c rollup.config.js'",
+    "dev": "concurrently \"tsc --watch\" \"rollup -c rollup.config.js -w\"",
+    "build": "concurrently \"tsc\" \"rollup -c rollup.config.js\"",
     "start": "node ./bin/bs-action-sync start",
     "eslint": "eslint . --ext .ts,.tsx",
     "es:fix": "eslint . --ext .ts,.tsx --fix"
