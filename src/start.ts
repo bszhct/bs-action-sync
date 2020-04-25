@@ -2,25 +2,24 @@
 /* eslint-disable no-param-reassign */
 
 import * as http from 'http'
-import * as fs from 'fs'
+import * as fs from 'fs-extra'
 import * as chalk from 'chalk'
 import * as httpProxy from 'http-proxy'
 import * as websocket from 'socket.io'
+import { Command } from 'commander'
 
 // 终端列表
 const sockets = {}
 
-
-export default (args, options) => {
-  const {target} = args
-  const {port} = options
+export default (cmd: Command): void => {
+  const { address, port } = cmd
   const proxy = httpProxy.createProxyServer()
 
   const server = http.createServer((req, res) => {
     // 如果是 html, 动态写入脚本
     if (req.method === 'GET' && req.headers.accept && req.headers.accept.includes('text/html')) {
       res.writeHead(200, {
-        'Content-type': 'text/html',
+        'Content-type': 'text/html'
       })
       const clientJs = fs.readFileSync(`${__dirname}/io-client.min.js`)
         .toString()
@@ -28,13 +27,13 @@ export default (args, options) => {
       res.write(`<script>${clientJs}</script>`)
     }
 
-    proxy.web(req, res, {target})
+    proxy.web(req, res, { target: address })
   })
 
   // 创建 io 连接
   const io = websocket(server, {
     serveClient: false,
-    cookie: false,
+    cookie: false
   })
 
   const root = io.of('/')
@@ -42,13 +41,13 @@ export default (args, options) => {
   root.on('connection', socket => {
     // 如果当前连接不存在的话进行保存
     if (!sockets[socket.id]) {
-      const {query} = socket.handshake
+      const { query } = socket.handshake
 
       sockets[socket.id] = {
         connect: true,
         ua: socket.request.headers['user-agent'],
         time: new Date(),
-        pathname: query.pathname,
+        pathname: query.pathname
       }
     }
 

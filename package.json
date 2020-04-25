@@ -1,6 +1,6 @@
 {
   "name": "@bszhct/bs-action-sync",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "一个跨终端交互同步的玩具",
   "scripts": {
     "dev": "concurrently \"tsc --watch\" \"rollup -c rollup.config.js -w\"",
@@ -8,17 +8,6 @@
     "start": "node ./bin/bs-action-sync start",
     "eslint": "eslint . --ext .ts,.tsx",
     "es:fix": "eslint . --ext .ts,.tsx --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "npm run eslint",
-      "git add"
-    ]
   },
   "bin": {
     "bs-action-sync": "bin/bs-action-sync"
@@ -28,12 +17,64 @@
   "license": "ISC",
   "author": "bszhct",
   "dependencies": {
-    "@bszhct/template-base": "0.0.2",
-    "caporal": "1.3.0",
     "chalk": "3.0.0",
+    "commander": "5.1.0",
+    "fs-extra": "9.0.0",
     "http-proxy": "1.18.0",
     "socket.io": "2.3.0",
     "update-notifier": "3.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.9.0",
+    "@babel/preset-env": "7.9.0",
+    "@types/fs-extra": "8.1.0",
+    "@types/node": "13.13.2",
+    "@typescript-eslint/eslint-plugin": "2.29.0",
+    "@typescript-eslint/parser": "2.29.0",
+    "concurrently": "5.0.2",
+    "eslint": "6.8.0",
+    "eslint-config-standard": "14.1.1",
+    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-standard": "4.0.1",
+    "husky": "4.2.5",
+    "lint-staged": "10.1.7",
+    "rollup": "1.32.1",
+    "rollup-plugin-babel": "4.3.3",
+    "rollup-plugin-uglify": "6.0.4",
+    "typescript": "3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "npm run es:fix"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "useJSXTextNode": true,
+      "project": "tsconfig.json"
+    }
   },
   "files": [
     "bin",
@@ -41,13 +82,7 @@
   ],
   "eslintIgnore": [
     "bin",
-    "lib"
-  ],
-  "devDependencies": {
-    "@babel/core": "7.8.0",
-    "@babel/preset-env": "7.8.0",
-    "concurrently": "5.0.2",
-    "rollup-plugin-babel": "4.3.3",
-    "rollup-plugin-uglify": "6.0.4"
-  }
+    "lib",
+    "rollup.config.js"
+  ]
 }
